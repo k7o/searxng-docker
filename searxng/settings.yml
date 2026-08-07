@@ -182,7 +182,12 @@ outgoing:
   # max_request_timeout: 10.0
   # suffix of searxng_useragent, could contain information like an email address
   # to the administrator
-  useragent_suffix: ""
+  #
+  # IMPORTANT: Wikimedia (Wikidata SPARQL / Wikipedia API) returns HTTP 403 for
+  # User-Agents that contain "searxng" but no parenthesized contact info.  A
+  # parenthesized URL/email must be present, e.g. "(https://github.com/searxng/searxng)"
+  # or "(contact@example.com)", otherwise the wikidata engine fails to initialize.
+  useragent_suffix: " (https://github.com/searxng/searxng)"
   # The maximum number of concurrent connections that may be established.
   pool_connections: 100
   # Allow the connection pool to maintain keep-alive connections below this
@@ -412,6 +417,7 @@ engines:
     categories: onions
     enable_http: true
     shortcut: ah
+    inactive: true
 
   - name: anaconda
     engine: xpath
@@ -432,21 +438,21 @@ engines:
     search_type: search
     categories: [general]
     shortcut: aol
-    disabled: true
+    inactive: true
 
   - name: aol images
     engine: aol
     search_type: image
     categories: [images]
     shortcut: aoli
-    disabled: true
+    inactive: true
 
   - name: aol videos
     engine: aol
     search_type: video
     categories: [videos]
     shortcut: aolv
-    disabled: true
+    inactive: true
 
   - name: arch linux wiki
     engine: archlinux
@@ -1807,7 +1813,7 @@ engines:
     categories: [general, web]
     shortcut: ps
     timeout: 4.0
-    disabled: true
+    inactive: true
 
   - name: presearch images
     engine: presearch
@@ -1816,7 +1822,7 @@ engines:
     categories: [images, web]
     timeout: 4.0
     shortcut: psimg
-    disabled: true
+    inactive: true
 
   - name: presearch videos
     engine: presearch
@@ -1825,7 +1831,7 @@ engines:
     categories: [general, web]
     timeout: 4.0
     shortcut: psvid
-    disabled: true
+    inactive: true
 
   - name: presearch news
     engine: presearch
@@ -1834,7 +1840,7 @@ engines:
     categories: [news, web]
     timeout: 4.0
     shortcut: psnews
-    disabled: true
+    inactive: true
 
   - name: pub.dev
     engine: xpath
@@ -1944,7 +1950,7 @@ engines:
     engine: reddit
     shortcut: re
     page_size: 25
-    disabled: true
+    inactive: true
 
   - name: reuters
     engine: reuters
@@ -2212,6 +2218,7 @@ engines:
     categories: onions
     enable_http: true
     shortcut: tch
+    inactive: true
 
   # TubeArchivist is a self-hosted Youtube archivist software.
   # https://docs.searxng.org/dev/engines/online/tubearchivist.html
@@ -2691,13 +2698,13 @@ engines:
     content_xpath: //div[@class="synonyms-list-group"]
     title_xpath: //div[@class="upper-synonyms"]/a
     no_result_for_http_status: [404]
+    language: de
     about:
       website: https://www.woxikon.de/
       wikidata_id:  # No Wikidata ID
       use_official_api: false
       require_api_key: false
       results: HTML
-      language: de
 
   - name: tootfinder
     engine: tootfinder
@@ -2731,13 +2738,13 @@ engines:
     content_xpath: //li/div[@class="searchresult"]
     categories: general
     disabled: true
+    language: fr
     about:
       website: https://wikimini.org/
       wikidata_id: Q3568032
       use_official_api: false
       require_api_key: false
       results: HTML
-      language: fr
 
   - name: wttr.in
     engine: wttr
