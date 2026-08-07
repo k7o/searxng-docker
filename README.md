@@ -49,7 +49,7 @@ cd searxng-docker
 ### Method 2: Bring your own reverse proxy (experienced users)
 
 6. Remove the caddy related parts in `docker-compose.yaml` such as the caddy service and its volumes.
-7. Point your reverse proxy to the port set for the `searxng` service in `docker-compose.yml` (8080 by default).
+7. Point your reverse proxy to the port set for the `searxng` service in `docker-compose.yml` (8888 by default).
 8. Generate and configure the required TLS certificates with the reverse proxy of your choice.
 9. Run SearXNG in the background: `docker compose up -d`
 
