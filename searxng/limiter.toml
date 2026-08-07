@@ -1,7 +1,49 @@
-# This configuration file updates the default configuration file
-# See https://github.com/searxng/searxng/blob/master/searx/limiter.toml
+# SearXNG bot detection / limiter configuration.
+# Loaded from /etc/searxng/limiter.toml (mounted from ./searxng/limiter.toml).
+# See https://docs.searxng.org/admin/searx.limiter.html
+# Defaults are shown in searx/limiter.toml in the searxng source; only
+# deviations from the defaults are listed here.
+
+[botdetection]
+
+# The prefix defines the number of leading bits in an address that are compared
+# to determine whether or not an address is part of a (client) network.
+ipv4_prefix = 32
+ipv6_prefix = 48
+
+# If the request IP is in trusted_proxies, the client IP is extracted from the
+# X-Forwarded-For / X-Real-IP headers (Caddy sits in front of SearXNG).
+trusted_proxies = [
+  '127.0.0.0/8',
+  '::1',
+]
 
 [botdetection.ip_limit]
-# activate advanced bot protection
-# enable this when running the instance for a public usage on the internet
+
+# Do not monitor link-local networks (fe80::/10) by default.
+filter_link_local = false
+
+# Require browsers to load a token link (blocks non-browser HTML clients).
+# Only affects HTML requests; the JSON API is governed by ip_limit's API window.
+# Only enable if the instance is public: adds a redirect on first visit per IP.
 link_token = false
+
+[botdetection.ip_lists]
+
+block_ip = [
+  # '93.184.216.34',  # example IPs to hard-block
+]
+
+# Local/private traffic is exempt from rate limiting: your LAN and local
+# containers (including pi's sandbox and other self-hosted tools) are never
+# throttled. Public bots on real internet IPs are still rate-limited.
+pass_ip = [
+  '10.0.0.0/8',
+  '172.16.0.0/12',
+  '192.168.0.0/16',
+  'fd00::/8',
+]
+
+# Activate passlist of (hardcoded) IPs from the SearXNG organization,
+# e.g. `check.searx.space`.
+pass_searxng_org = true

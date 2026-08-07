@@ -95,9 +95,11 @@ server:
   base_url: false  # "http://example.com/location"
   # rate limit the number of request on the instance, block some bots.
   # Is overwritten by ${SEARXNG_LIMITER}
-  limiter: false
+  limiter: true
   # enable features designed only for public instances.
   # Is overwritten by ${SEARXNG_PUBLIC_INSTANCE}
+  # Only set to true if the instance is reachable by strangers; it adds
+  # link_token + public-instance features that add friction for private use.
   public_instance: false
 
   # If your instance owns a /etc/searxng/settings.yml file, then set the following
@@ -536,7 +538,7 @@ engines:
   - name: bing
     engine: bing
     shortcut: bi
-    disabled: true
+    disabled: false
     # base_url: https://cn.bing.com  # for instances hosted in China
 
   - name: bing images
@@ -1548,7 +1550,7 @@ engines:
     engine: mwmbl
     # api_url: https://api.mwmbl.org
     shortcut: mwm
-    disabled: true
+    disabled: false
 
   - name: niconico
     engine: niconico
@@ -2322,7 +2324,7 @@ engines:
     content_query: Snippet
     categories: [general, web]
     shortcut: wib
-    disabled: true
+    disabled: false
     about:
       website: https://wiby.me/
 
@@ -2551,7 +2553,7 @@ engines:
     categories: [general, web]
     engine: naver
     shortcut: nvr
-    disabled: true
+    disabled: false
 
   - name: naver images
     naver_category: images
@@ -2761,7 +2763,7 @@ engines:
     content_xpath: ./p
     paging: true
     send_page_num_on_first_page: false  # otherwise blocks requests
-    disabled: true
+    disabled: false
     about:
       website: https://www.zapmeta.com/
       use_official_api: false
@@ -2858,7 +2860,7 @@ engines:
     engine: s1search
     shortcut: std
     base_url: https://info.searchtoday.site
-    disabled: true
+    disabled: false
 
   # - name: webcrawler
   #   engine: s1search
@@ -2883,7 +2885,7 @@ engines:
     engine: s1search
     shortcut: ifs
     base_url: https://search.infospace.com
-    disabled: true
+    disabled: false
 
 # Doku engine lets you access to any Doku wiki instance:
 # A public one or a privete/corporate one.
